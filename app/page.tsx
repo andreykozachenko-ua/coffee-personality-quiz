@@ -92,6 +92,7 @@ function getResult(answers: string[]): string {
 }
 
 export default function Home() {
+  const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [showResult, setShowResult] = useState(false);
@@ -108,6 +109,7 @@ export default function Home() {
   }
 
   function handleRetake() {
+    setStarted(false);
     setCurrentQuestion(0);
     setAnswers([]);
     setShowResult(false);
@@ -126,25 +128,71 @@ export default function Home() {
         padding: "2rem 1rem",
       }}
     >
-      {!showResult && currentQuestion === 0 && answers.length === 0 && (
-        <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+      {!started ? (
+        <div
+          style={{
+            background: "var(--card-bg)",
+            boxShadow: "0 8px 40px var(--shadow)",
+            border: "1px solid var(--border)",
+            borderRadius: "1.5rem",
+            padding: "3rem 2.5rem",
+            maxWidth: "480px",
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ fontSize: "4rem", marginBottom: "1.25rem" }}>☕</div>
           <h1
             style={{
               fontFamily: "var(--font-playfair), serif",
-              fontSize: "2.25rem",
+              fontSize: "2rem",
               color: "var(--text-primary)",
-              marginBottom: "0.5rem",
+              marginBottom: "1rem",
+              lineHeight: "1.3",
             }}
           >
             What&apos;s Your Coffee Personality?
           </h1>
-          <p style={{ color: "var(--text-secondary)", fontSize: "1.0625rem" }}>
-            Answer 5 quick questions to find your perfect brew.
+          <p
+            style={{
+              color: "var(--text-secondary)",
+              fontSize: "1.0625rem",
+              lineHeight: "1.7",
+              marginBottom: "0.75rem",
+            }}
+          >
+            Not all coffee drinkers are created equal. Are you a bold shot of espresso or a cozy caramel latte?
           </p>
+          <p
+            style={{
+              color: "var(--text-secondary)",
+              fontSize: "0.9375rem",
+              marginBottom: "2rem",
+            }}
+          >
+            Answer 5 quick questions to discover your perfect brew.
+          </p>
+          <button
+            onClick={() => setStarted(true)}
+            style={{
+              background: "var(--accent)",
+              color: "#fff",
+              border: "none",
+              borderRadius: "9999px",
+              padding: "0.875rem 2.5rem",
+              fontSize: "1.0625rem",
+              fontWeight: "700",
+              cursor: "pointer",
+              transition: "background 0.18s ease",
+              fontFamily: "var(--font-lato), sans-serif",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--accent-dark)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--accent)"; }}
+          >
+            Start Quiz →
+          </button>
         </div>
-      )}
-
-      {!showResult ? (
+      ) : !showResult ? (
         <QuizQuestion
           question={questions[currentQuestion].text}
           options={questions[currentQuestion].options}
