@@ -145,7 +145,7 @@ export default function Home() {
           <h1
             style={{
               fontFamily: "var(--font-playfair), serif",
-              fontSize: "2rem",
+              fontSize: "2.75rem",
               color: "var(--text-primary)",
               marginBottom: "1rem",
               lineHeight: "1.3",
